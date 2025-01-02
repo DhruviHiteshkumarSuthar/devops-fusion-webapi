@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Current Version
         id: version
-         run: |
+        run: |
            git fetch --tags
            git fetch origin main --force
            VERSION=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "v0.0.0")
