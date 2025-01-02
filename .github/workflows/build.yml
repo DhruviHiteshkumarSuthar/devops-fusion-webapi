@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -25,7 +24,9 @@ jobs:
       - name: Get Current Version
         id: version
         run: |
-          VERSION=$(git describe --tags --match "v*" --abbrev=0 || echo "v0.0.0")
+          # Fetch all tags to ensure they are available locally
+          git fetch --tags
+          VERSION=$(git describe --tags --match "v*" --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "CURRENT_VERSION=${VERSION#v}" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$VERSION"
 
@@ -49,3 +50,11 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/devops-fusion-webapi:v${{ env.NEW_VERSION }}
           context: ./devops.fusion.webapi
           file: ./devops.fusion.webapi/Dockerfile
+
+      - name: Tag and Push New Version
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Release version v${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
