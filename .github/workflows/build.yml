@@ -57,7 +57,9 @@ jobs:
           file: ./devops.fusion.webapi/Dockerfile
 
       - name: Tag and Push New Version
-        if: github.ref == 'refs/heads/main' && steps.version.outputs.VERSION != ""
+        if: github.ref == 'refs/heads/main'
         run: |
-          git tag -a "${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
-          git push origin "${{ env.VERSION }}"
+          if [[ -n "${{ env.VERSION }}" ]]; then
+            git tag -a "${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
+            git push origin "${{ env.VERSION }}"
+          fi
