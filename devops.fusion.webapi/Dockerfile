@@ -9,7 +9,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-########
+
 # Copy the project file into the container
 COPY devops.fusion.webapi.csproj .
 RUN dotnet restore devops.fusion.webapi.csproj
