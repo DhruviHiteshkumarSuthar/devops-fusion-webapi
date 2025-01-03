@@ -57,11 +57,13 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Build and Push Docker Image
+            - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/devops-fusion-webapi:${{ env.VERSION }}
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/devops-fusion-webapi:${{ env.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/devops-fusion-webapi:latest
           context: ./devops.fusion.webapi
           file: ./devops.fusion.webapi/Dockerfile
 
