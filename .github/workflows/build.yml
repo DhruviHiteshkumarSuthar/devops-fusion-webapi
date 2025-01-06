@@ -77,8 +77,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/${{ github.actor }}/fusion-webapi:${{ env.VERSION }}
-            ghcr.io/${{ github.actor }}/fusion-webapi:latest
+            ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+            ghcr.io/${{ github.repository }}:latest
           context: ./devops.fusion.webapi
           file: ./devops.fusion.webapi/Dockerfile
         
