@@ -78,8 +78,8 @@ jobs:
           tags: |
             ghcr.io/username/fusion-webapi:${{ env.VERSION }}
             ghcr.io/username/fusion-webapi:latest
-          context: ./fusion.webapi
-          file: ./webapi/Dockerfile
+          context: ./devops.fusion.webapi
+          file: ./devops.fusion.webapi/Dockerfile
         
 
       - name: Tag and Push New Version
